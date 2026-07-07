@@ -137,12 +137,13 @@ mongoose
     console.log("Host:", mongoose.connection.host);
     console.log("Database:", mongoose.connection.name);
 
-    const PORT = process.env.PORT || 5000;
+  
 
-    app.listen(PORT, () => {
-      console.log(`🚀 Server Running On Port ${PORT}`);
-    });
+   
   })
   .catch((err) => {
     console.log("MongoDB Error:", err);
   });
+
+
+  module.exports = app;
