@@ -38,10 +38,16 @@ app.use("/api/order", orderRoutes);
 
 app.use(errorHandler);
 
-mongoose
-  .connect(process.env.MONGO_URL)
-  .then(() => console.log("MongoDB connected"))
-  .catch((err) => console.log("MongoDB Error:", err));
+mongoose.connect(process.env.MONGO_URI)
+    .then(() => {
+        console.log("✅ MongoDB Connected");
+        console.log("Host:", mongoose.connection.host);
+        console.log("Database Name:", mongoose.connection.name);
+    })
+    .catch((err) => {
+        console.error("❌ MongoDB Connection Error:", err);
+        process.exit(1);
+    });
 
 app.get("/", (req, res) => {
   res.send("Ecommerce API Running");
