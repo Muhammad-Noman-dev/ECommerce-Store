@@ -80,21 +80,26 @@ const allowedOrigins = [
   "https://e-commerce-store-mc6e.vercel.app",
 ];
 
-app.use(
-  cors({
-    origin: function (origin, callback) {
-      if (!origin) return callback(null, true);
+// app.use(
+//   cors({
+//     origin: function (origin, callback) {
+//       if (!origin) return callback(null, true);
 
-      if (allowedOrigins.includes(origin)) {
-        callback(null, true);
-      } else {
-        callback(new Error("CORS Not Allowed"));
-      }
-    },
-    credentials: true,
-  })
-);
+//       if (allowedOrigins.includes(origin)) {
+//         callback(null, true);
+//       } else {
+//         callback(new Error("CORS Not Allowed"));
+//       }
+//     },
+//     credentials: true,
+//   })
+// );
+const cors = require("cors");
 
+app.use(cors({
+  origin: true,
+  credentials: true,
+}));
 // ================= Middleware =================
 app.use(helmet());
 app.use(express.json());
