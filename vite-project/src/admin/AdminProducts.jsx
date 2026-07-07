@@ -87,7 +87,7 @@ const navigate = useNavigate();
 
                   <td className="p-3">
                     <img
-                      src={`http://localhost:5000/uploads/${product.image}`}
+                     src={`${import.meta.env.VITE_API_URL}/uploads/${product.image}`}
                       alt={product.name}
                       className="w-16 h-16 object-cover mx-auto rounded"
                     />

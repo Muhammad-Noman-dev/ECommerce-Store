@@ -17,7 +17,7 @@ const ProductCard = ({ product, onAddToCart }) => {
           src={
             product.image.startsWith("http")
               ? product.image
-              : `http://localhost:5000/uploads/${product.image}`
+               : `${import.meta.env.VITE_API_URL}/uploads/${product.image}`
           }
           alt={product.name}
           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"

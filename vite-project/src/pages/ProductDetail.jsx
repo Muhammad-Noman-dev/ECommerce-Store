@@ -57,7 +57,7 @@ const ProductDetail = () => {
         {/* Image */}
         <div className="bg-gray-100 rounded-3xl overflow-hidden">
           <img 
-            src={`http://localhost:5000/uploads/${product.image}`} 
+        src={`${import.meta.env.VITE_API_URL}/uploads/${product.image}`}
             alt={product.name}
             className="w-full h-full object-cover"
           />

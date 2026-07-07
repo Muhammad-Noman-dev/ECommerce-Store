@@ -85,7 +85,7 @@ const placeOrder = async () => {
             {cart.products.map((item) => (
               <div key={item.product._id} className="flex gap-6 bg-white p-6 rounded-2xl mb-6 shadow-sm">
                 <img 
-                  src={`http://localhost:5000/uploads/${item.product.image}`} 
+                 src={`${import.meta.env.VITE_API_URL}/uploads/${item.product.image}`} 
                   alt={item.product.name}
                   className="w-32 h-32 object-cover rounded-xl"
                 />
