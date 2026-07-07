@@ -94,7 +94,7 @@ const allowedOrigins = [
 //     credentials: true,
 //   })
 // );
-const cors = require("cors");
+
 
 app.use(cors({
   origin: true,
