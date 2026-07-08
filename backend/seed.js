@@ -6,7 +6,7 @@ const Product = require("./model/Product");
 const Category = require("./model/Category");
 
 mongoose
-  .connect(process.env.MONGO_URL)
+  .connect(process.env.MONGO_URI)
   .then(async () => {
     console.log("MongoDB Connected");
 

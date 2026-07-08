@@ -97,8 +97,10 @@ const allowedOrigins = [
 
 
 app.use(cors({
-  origin: true,
+  origin: true,        
   credentials: true,
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"]
 }));
 // ================= Middleware =================
 app.use(helmet());
@@ -128,7 +130,6 @@ app.use("/api/order", orderRoutes);
 
 // ================= Error Handler =================
 app.use(errorHandler);
-
 // ================= MongoDB =================
 mongoose
   .connect(process.env.MONGO_URI)
@@ -144,6 +145,16 @@ mongoose
   .catch((err) => {
     console.log("MongoDB Error:", err);
   });
+  // Development mein listen karo
+if (process.env.NODE_ENV !== "production") {
+  const PORT = process.env.PORT || 5000;
+  app.listen(PORT, () => {
+    console.log(`🚀 Server running on port ${PORT}`);
+  });
+}
+
+module.exports = app;
 
 
-  module.exports = app;
+
+

@@ -5,13 +5,21 @@ const createProduct = async (req, res) => {
   try {
     const { name, description, price, category, stock } = req.body;
 
+    // Image check
+    if (!req.file) {
+      return res.status(400).json({
+        success: false,
+        message: "Product image is required",
+      });
+    }
+
     const product = await Product.create({
       name,
       description,
-      price,
+      price: Number(price),
       category,
-      stock,
-      image: req.file.filename,
+      stock: Number(stock) || 0,
+      image: req.file.filename || req.file.originalname,  // multer memory storage ke liye
     });
 
     res.status(201).json({
@@ -21,12 +29,12 @@ const createProduct = async (req, res) => {
     });
 
   } catch (error) {
+    console.error("Create Product Error:", error);
     res.status(500).json({
       success: false,
       message: error.message,
     });
   }
-
 };
   const getAllProducts = async (req, res) => {
   try {
