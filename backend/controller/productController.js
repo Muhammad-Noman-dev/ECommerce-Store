@@ -5,23 +5,13 @@ const createProduct = async (req, res) => {
   try {
     const { name, description, price, category, stock } = req.body;
 
-    if (!req.file) {
-      return res.status(400).json({
-        success: false,
-        message: "Product image is required",
-      });
-    }
-
-    // Temporary Public Image (Picsum)
-    const imageUrl = `https://picsum.photos/id/${Math.floor(Math.random() * 1000)}/400/400`;
-
     const product = await Product.create({
       name,
       description,
-      price: Number(price),
+      price,
       category,
-      stock: Number(stock) || 0,
-      image: imageUrl,        // ← Yeh change important hai
+      stock,
+      image: req.file.path, // ✅ ab ye poora Cloudinary URL hai, sirf filename nahi
     });
 
     res.status(201).json({
@@ -29,9 +19,7 @@ const createProduct = async (req, res) => {
       message: "Product created successfully",
       product,
     });
-
   } catch (error) {
-    console.error("Create Product Error:", error);
     res.status(500).json({
       success: false,
       message: error.message,

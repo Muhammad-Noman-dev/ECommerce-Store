@@ -1,8 +1,10 @@
 import { ShoppingCart, Eye } from 'lucide-react';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const ProductCard = ({ product, onAddToCart }) => {
   const [isAdding, setIsAdding] = useState(false);
+  const navigate = useNavigate();
 
   const handleAddToCart = async () => {
     setIsAdding(true);
@@ -10,17 +12,30 @@ const ProductCard = ({ product, onAddToCart }) => {
     setIsAdding(false);
   };
 
+  // ✅ safe image URL resolver — won't crash if image is missing/undefined
+  const getImageUrl = () => {
+    if (!product.image) {
+      return 'https://via.placeholder.com/400x400?text=No+Image';
+    }
+    return product.image.startsWith('http')
+      ? product.image
+      : `${import.meta.env.VITE_API_URL}/uploads/${product.image}`;
+  };
+
   return (
     <div className="bg-white rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden group">
-      <div className="relative h-56 bg-gray-100">
+      <div
+        className="relative h-56 bg-gray-100 cursor-pointer"
+        onClick={() => navigate(`/product/${product._id}`)}
+      >
         <img
-          src={
-            product.image.startsWith("http")
-              ? product.image
-               : `${import.meta.env.VITE_API_URL}/uploads/${product.image}`
-          }
+          src={getImageUrl()}
           alt={product.name}
           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+          onError={(e) => {
+            e.target.onerror = null;
+            e.target.src = 'https://via.placeholder.com/400x400?text=No+Image';
+          }}
         />
 
         {product.stock > 0 ? (
@@ -35,7 +50,10 @@ const ProductCard = ({ product, onAddToCart }) => {
       </div>
 
       <div className="p-4">
-        <h3 className="font-semibold text-lg line-clamp-2 min-h-[56px]">
+        <h3
+          className="font-semibold text-lg line-clamp-2 min-h-[56px] cursor-pointer hover:text-indigo-600 transition"
+          onClick={() => navigate(`/product/${product._id}`)}
+        >
           {product.name}
         </h3>
 
@@ -44,22 +62,25 @@ const ProductCard = ({ product, onAddToCart }) => {
         </p>
 
         <div className="flex justify-between items-center mt-4">
-          <div>
-            <span className="text-2xl font-bold text-indigo-600">
-              PRICE: {product.price}
-            </span>
-          </div>
+          <span className="text-2xl font-bold text-indigo-600">
+            ₹{product.price}
+          </span>
 
           <div className="flex gap-2">
             <button
               onClick={handleAddToCart}
               disabled={isAdding || product.stock === 0}
               className="bg-indigo-600 hover:bg-indigo-700 disabled:bg-gray-400 text-white p-3 rounded-xl transition-all"
+              aria-label="Add to cart"
             >
               <ShoppingCart size={20} />
             </button>
 
-            <button className="border border-gray-300 hover:border-gray-400 p-3 rounded-xl transition-all">
+            <button
+              onClick={() => navigate(`/product/${product._id}`)}
+              className="border border-gray-300 hover:border-gray-400 p-3 rounded-xl transition-all"
+              aria-label="View product"
+            >
               <Eye size={20} />
             </button>
           </div>
