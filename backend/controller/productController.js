@@ -5,7 +5,6 @@ const createProduct = async (req, res) => {
   try {
     const { name, description, price, category, stock } = req.body;
 
-    // Image check
     if (!req.file) {
       return res.status(400).json({
         success: false,
@@ -13,13 +12,16 @@ const createProduct = async (req, res) => {
       });
     }
 
+    // Temporary Public Image (Picsum)
+    const imageUrl = `https://picsum.photos/id/${Math.floor(Math.random() * 1000)}/400/400`;
+
     const product = await Product.create({
       name,
       description,
       price: Number(price),
       category,
       stock: Number(stock) || 0,
-      image: req.file.filename || req.file.originalname,  // multer memory storage ke liye
+      image: imageUrl,        // ← Yeh change important hai
     });
 
     res.status(201).json({
