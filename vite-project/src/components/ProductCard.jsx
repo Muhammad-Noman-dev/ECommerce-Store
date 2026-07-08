@@ -15,7 +15,7 @@ const ProductCard = ({ product, onAddToCart }) => {
   // ✅ safe image URL resolver — won't crash if image is missing/undefined
   const getImageUrl = () => {
     if (!product.image) {
-      return 'https://via.placeholder.com/400x400?text=No+Image';
+      return 'https://placehold.co/400x400?text=No+Image';
     }
     return product.image.startsWith('http')
       ? product.image
@@ -34,7 +34,7 @@ const ProductCard = ({ product, onAddToCart }) => {
           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
           onError={(e) => {
             e.target.onerror = null;
-            e.target.src = 'https://via.placeholder.com/400x400?text=No+Image';
+            e.target.src = 'https://placehold.co/400x400?text=No+Image';
           }}
         />
 
