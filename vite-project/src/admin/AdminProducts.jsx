@@ -92,7 +92,7 @@ const AdminProducts = () => {
                         onError={(e) => {
                           e.target.onerror = null;
                           e.target.src =
-                            "https://via.placeholder.com/64?text=No+Image";
+                            'https://placehold.co/400x400?text=No+Image'
                         }}
                       />
                     </td>
